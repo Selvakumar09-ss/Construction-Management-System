@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: construction-management-system
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn Last_one_python:app
