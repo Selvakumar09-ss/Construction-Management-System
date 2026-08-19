@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Project: {{ project.name }}</h2>
+<p><strong>Location:</strong> {{ project.location }} | <strong>Dates:</strong> {{ project.start_date }} — {{ project.end_date }}</p>
+<p><strong>Budget:</strong> Estimated {{ project.budget_estimated }} | Actual {{ project.budget_actual }}</p>
+<p><strong>Progress:</strong>
+  <div class="progress" style="max-width:300px;display:inline-block;vertical-align:middle;margin-left:8px">
+    <span style="width:{{ project.progress }}%"></span>
+  </div>
+  {{ project.progress }}%
+</p>
+<p><strong>Milestones:</strong><br><pre style="background:#fafafa;padding:8px;border-radius:6px">{{ project.milestones }}</pre></p>
+
+{% if current_user and current_user.role in ['Admin','Manager'] %}
+  <p><a class="btn" href="{{ url_for('project_update', pid=project.id) }}">Post Daily Update</a>
+     <a class="btn alt" href="{{ url_for('project_edit', pid=project.id) }}">Edit Project</a></p>
+{% endif %}
+
+<h3>Tasks</h3>
+<table>
+  <tr><th>ID</th><th>Title</th><th>Assigned</th><th>Priority</th><th>Status</th></tr>
+  {% for t in tasks %}
+    <tr>
+      <td>{{ t.id }}</td>
+      <td>{{ t.title }}</td>
+      <td>{{ (t.assigned_to and (User.query.get(t.assigned_to).name) ) or '---' }}</td>
+      <td>{{ t.priority }}</td>
+      <td>{{ t.status }}</td>
+    </tr>
+  {% endfor %}
+</table>
+
+<h3>Daily Updates</h3>
+{% if updates %}
+{% for u in updates %}
+  <div class="update-card">
+    <div class="update-meta">
+      <span class="update-date">📅 {{ u.timestamp }}</span>
+      <span class="update-author">by {{ (User.query.get(u.author_id).name) if u.author_id else 'Unknown' }}</span>
+    </div>
+    {% if u.text %}<p class="update-text">{{ u.text }}</p>{% endif %}
+    {% if u.images %}
+      <div class="update-images">
+        {% for fname in u.images.split(',') %}
+          {% if fname %}
+            <div class="img-wrap">
+              <img src="{{ url_for('static', filename='uploads/' + fname) }}"
+                   alt="Update photo"
+                   class="clickable-img"
+                   onclick="openLightbox('{{ url_for('static', filename='uploads/' + fname) }}', '{{ fname }}')"
+                   title="Click to view full image">
+              <div class="img-date">Uploaded: {{ u.timestamp }}</div>
+              <div class="img-actions">
+                <a href="{{ url_for('download_image', filename=fname) }}" class="img-download-btn" title="Download">⬇ Download</a>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endfor %}
+{% else %}
+  <p class="note">No updates yet.</p>
+{% endif %}
+
+<!-- Lightbox -->
+<div id="lightbox" onclick="closeLightbox()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:14px">
+  <img id="lightbox-img" src="" alt="Full view" style="max-width:92vw;max-height:82vh;border-radius:10px;box-shadow:0 8px 40px rgba(0,0,0,0.5);object-fit:contain">
+  <div style="display:flex;gap:12px;align-items:center">
+    <a id="lightbox-download" href="#" download class="hero-cta" style="font-size:13px;padding:9px 20px" onclick="event.stopPropagation()">⬇ Download</a>
+    <button onclick="closeLightbox()" style="background:rgba(255,255,255,0.15);color:white;border:none;padding:9px 20px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600">✕ Close</button>
+  </div>
+</div>
+
+<style>
+.clickable-img { cursor:pointer; transition:opacity 0.2s; pointer-events:auto !important; user-select:auto !important; -webkit-user-drag:auto !important; }
+.clickable-img:hover { opacity:0.85; }
+.img-actions { padding:4px 6px; background:#f5f5f5; text-align:center; }
+.img-download-btn { font-size:11px; color:#0b6e4f; font-weight:700; text-decoration:none; display:block; }
+.img-download-btn:hover { color:#085c42; }
+.img-wrap { flex:0 0 150px; }
+</style>
+
+<script>
+function openLightbox(src, fname) {
+  var lb = document.getElementById('lightbox');
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox-download').href = '/download/image/' + fname;
+  document.getElementById('lightbox-download').download = fname;
+  lb.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').style.display = 'none';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeLightbox(); });
+</script>
+
+{% endblock %}

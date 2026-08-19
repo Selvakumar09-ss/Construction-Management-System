@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ 'Update Material' if material else 'Add Material' }}</h2>
+<form method="post">
+  <label>Name</label><input type="text" name="name" value="{{ material.name if material else '' }}" {% if not material %}required{% endif %}>
+  <label>Quantity</label><input type="text" name="quantity" value="{{ material.quantity if material else '' }}">
+  <label>Used</label><input type="text" name="used" value="{{ material.used if material else '0' }}">
+  <label>Unit</label><input type="text" name="unit" value="{{ material.unit if material else 'pcs' }}">
+  <label>Threshold</label><input type="text" name="threshold" value="{{ material.threshold if material else '0' }}">
+  <p><button class="btn" type="submit">Save</button></p>
+</form>
+{% endblock %}

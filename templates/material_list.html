@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Materials</h2>
+<p><a class="btn" href="{{ url_for('add_material') }}">Add Material</a></p>
+<table>
+  <tr><th>ID</th><th>Name</th><th>Available</th><th>Used</th><th>Unit</th><th>Threshold</th><th>Actions</th></tr>
+  {% for m in materials %}
+    <tr>
+      <td>{{ m.id }}</td>
+      <td>{{ m.name }}</td>
+      <td>{{ m.quantity }}</td>
+      <td>{{ m.used }}</td>
+      <td>{{ m.unit }}</td>
+      <td>{{ m.threshold }}</td>
+      <td><a href="{{ url_for('update_material', mid=m.id) }}">Update</a></td>
+    </tr>
+  {% endfor %}
+</table>
+
+{% if low %}
+  <h3>Low stock alerts</h3>
+  <ul>
+    {% for l in low %}
+      <li>{{ l.name }} — remaining {{ l.quantity - l.used }} {{ l.unit }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% endblock %}

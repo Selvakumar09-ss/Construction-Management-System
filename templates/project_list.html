@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Projects</h2>
+{% if current_user and current_user and current_user.role in ['Admin','Manager'] %}
+  <p><a class="btn" href="{{ url_for('add_project') }}">Add Project</a></p>
+{% endif %}
+<table>
+  <tr><th>ID</th><th>Name</th><th>Location</th><th>Dates</th><th>Progress</th><th>Actions</th></tr>
+  {% for p in projects %}
+    <tr>
+      <td>{{ p.id }}</td>
+      <td>{{ p.name }}</td>
+      <td>{{ p.location }}</td>
+      <td>{{ p.start_date }} — {{ p.end_date }}</td>
+      <td>
+        <div class="progress"><span style="width:{{ p.progress }}%"></span></div>
+      </td>
+      <td><a href="{{ url_for('project_detail', pid=p.id) }}">View</a></td>
+    </tr>
+  {% endfor %}
+</table>
+{% endblock %}

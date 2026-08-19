@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ 'Edit User' if user else 'Add User' }}</h2>
+<form method="post">
+  <label>Name</label><input type="text" name="name" value="{{ user.name if user else '' }}" required>
+  <label>Email</label><input type="email" name="email" value="{{ user.email if user else '' }}" required>
+  <label>Role</label>
+  <select name="role">
+    {% for r in roles %}
+      <option value="{{ r }}" {% if user and user.role==r %}selected{% endif %}>{{ r }}</option>
+    {% endfor %}
+  </select>
+  <label>Password <small class="note">(leave blank to keep current)</small></label>
+  <input type="password" name="password">
+  <p><button class="btn" type="submit">Save</button></p>
+</form>
+{% endblock %}

@@ -1,0 +1,317 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Hero Section -->
+<div class="landing-hero">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Construction Management Platform
+    </div>
+    <h1 class="hero-title">
+      WELCOME TO<br>
+      <span class="hero-accent">CONSTRUCTION</span><br>
+      WORK FLOW
+    </h1>
+    <p class="hero-desc">
+      Manage projects, workers, materials and daily photo updates — all in one place.
+    </p>
+    <a class="hero-cta" href="{{ url_for('login') }}">
+      <span>Sign In to Dashboard</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+  <div class="hero-visual">
+    <div class="blueprint-grid">
+      <div class="bp-stat">
+        <div class="bp-num">100%</div>
+        <div class="bp-label">Project Visibility</div>
+      </div>
+      <div class="bp-stat">
+        <div class="bp-num">Real-time</div>
+        <div class="bp-label">Photo Updates</div>
+      </div>
+      <div class="bp-stat">
+        <div class="bp-num">3 Roles</div>
+        <div class="bp-label">Access Control</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Role Cards -->
+<div class="roles-section">
+  <div class="roles-label">WHO USES THIS PLATFORM</div>
+  <div class="roles-grid">
+    <div class="role-card role-admin">
+      <div class="role-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <h3>Admin</h3>
+      <p>Full control — add users, projects, reports.</p>
+      <div class="role-perms">
+        <span>Users</span><span>Projects</span><span>Reports</span><span>Settings</span>
+      </div>
+    </div>
+    <div class="role-card role-manager">
+      <div class="role-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      </div>
+      <h3>Manager</h3>
+      <p>Manage projects, tasks, materials, post updates.</p>
+      <div class="role-perms">
+        <span>Tasks</span><span>Materials</span><span>Updates</span>
+      </div>
+    </div>
+    <div class="role-card role-client">
+      <div class="role-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+      <h3>Client</h3>
+      <p>View only their project updates and progress.</p>
+      <div class="role-perms">
+        <span>View Projects</span><span>Track Progress</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* ===== LANDING PAGE STYLES ===== */
+.landing-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 48px 40px 40px;
+  background: linear-gradient(135deg, #0a1628 0%, #0d2137 50%, #0b3d2e 100%);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 28px;
+  min-height: 340px;
+}
+
+.hero-bg-pattern {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,200,50,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,200,50,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 520px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,200,50,0.12);
+  border: 1px solid rgba(255,200,50,0.25);
+  color: #ffc832;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  background: #ffc832;
+  border-radius: 50%;
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.hero-title {
+  font-size: 38px;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin: 0 0 18px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.hero-accent {
+  color: #ffc832;
+}
+
+.hero-desc {
+  color: rgba(255,255,255,0.65);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0 0 28px;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffc832;
+  color: #0a1628;
+  padding: 13px 28px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 14px;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: all 0.2s;
+}
+
+.hero-cta:hover {
+  background: #e6b22e;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(255,200,50,0.3);
+}
+
+.hero-visual {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+.blueprint-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.bp-stat {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 16px 24px;
+  text-align: right;
+  min-width: 180px;
+}
+
+.bp-num {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffc832;
+}
+
+.bp-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  margin-top: 2px;
+}
+
+/* ===== ROLES SECTION ===== */
+.roles-section {
+  margin-top: 8px;
+}
+
+.roles-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #999;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.roles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.role-card {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 24px 22px 20px;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.role-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+
+.role-admin::before { background: linear-gradient(90deg, #e74c3c, #c0392b); }
+.role-manager::before { background: linear-gradient(90deg, #0b6e4f, #08a06a); }
+.role-client::before { background: linear-gradient(90deg, #2980b9, #3498db); }
+
+.role-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.10);
+}
+
+.role-icon-wrap {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.role-admin .role-icon-wrap { background: #fdf0ef; color: #c0392b; }
+.role-manager .role-icon-wrap { background: #edfaf3; color: #0b6e4f; }
+.role-client .role-icon-wrap { background: #eaf4fb; color: #2980b9; }
+
+.role-card h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.role-card p {
+  margin: 0 0 16px;
+  font-size: 13.5px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.role-perms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.role-perms span {
+  display: inline-block;
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.role-admin .role-perms span { background: #fdf0ef; color: #c0392b; }
+.role-manager .role-perms span { background: #edfaf3; color: #0b6e4f; }
+.role-client .role-perms span { background: #eaf4fb; color: #2980b9; }
+
+@media (max-width: 700px) {
+  .landing-hero { flex-direction: column; padding: 32px 24px; min-height: unset; }
+  .hero-title { font-size: 28px; }
+  .hero-visual { width: 100%; }
+  .blueprint-grid { flex-direction: row; flex-wrap: wrap; }
+  .bp-stat { flex: 1; text-align: center; min-width: 120px; }
+}
+</style>
+
+{% endblock %}

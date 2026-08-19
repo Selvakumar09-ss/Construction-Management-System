@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Notifications</h2>
+{% if notes %}
+<ul class="notif-list">
+  {% for n in notes %}
+    <li class="notif-item {{ 'unread' if not n.seen else '' }}">
+      <span class="notif-time">{{ n.created }}</span>
+      <span class="notif-msg">{{ n.message }}</span>
+    </li>
+  {% endfor %}
+</ul>
+{% else %}
+  <p class="note">No notifications yet.</p>
+{% endif %}
+{% endblock %}

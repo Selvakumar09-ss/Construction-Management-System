@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ 'Edit Project' if project else 'Add Project' }}</h2>
+<form method="post">
+  <label>Name</label><input type="text" name="name" value="{{ project.name if project else '' }}" required>
+  <label>Location</label><input type="text" name="location" value="{{ project.location if project else '' }}">
+  <div class="row">
+    <div class="col">
+      <label>Start Date</label><input type="text" name="start_date" value="{{ project.start_date if project else '' }}">
+    </div>
+    <div class="col">
+      <label>End Date</label><input type="text" name="end_date" value="{{ project.end_date if project else '' }}">
+    </div>
+  </div>
+  <label>Estimated Budget</label><input type="text" name="budget_estimated" value="{{ project.budget_estimated if project else '' }}">
+  <label>Actual Budget</label><input type="text" name="budget_actual" value="{{ project.budget_actual if project else '' }}">
+  <label>Milestones (one per line)</label><textarea name="milestones" rows="4">{{ project.milestones if project else '' }}</textarea>
+  <label>Progress (%)</label><input type="text" name="progress" value="{{ project.progress if project else '0' }}">
+  <label>Client</label>
+  <select name="client_id">
+    <option value="">(none)</option>
+    {% for c in clients %}
+      <option value="{{ c.id }}" {% if project and project.client_id==c.id %}selected{% endif %}>{{ c.name }} ({{ c.email }})</option>
+    {% endfor %}
+  </select>
+  <p><button class="btn" type="submit">Save Project</button></p>
+</form>
+{% endblock %}

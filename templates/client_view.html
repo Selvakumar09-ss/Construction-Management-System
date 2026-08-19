@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Client Dashboard</h2>
+<p>Your Projects:</p>
+{% for p in projects %}
+  <div style="border:1px solid #eee;padding:8px;margin-bottom:8px">
+    <h3>{{ p.name }}</h3>
+    <p>{{ p.location }} | {{ p.start_date }} - {{ p.end_date }} </p>
+    <p><a class="btn" href="{{ url_for('project_detail', pid=p.id) }}">View Project</a></p>
+  </div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Reports</h2>
+<p>Download prepared reports:</p>
+<ul>
+  <li><a class="btn" href="{{ url_for('download_report', kind='projects_xlsx') }}">Projects (Excel)</a></li>
+  <li><a class="btn" href="{{ url_for('download_report', kind='materials_csv') }}">Materials (CSV)</a></li>
+</ul>
+{% endblock %}

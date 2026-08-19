@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ 'Edit Task' if task else 'Add Task' }}</h2>
+<form method="post">
+  <label>Title</label><input type="text" name="title" value="{{ task.title if task else '' }}" required>
+  <label>Description</label><textarea name="description">{{ task.description if task else '' }}</textarea>
+  <label>Project</label>
+  <select name="project_id">
+    {% for p in projects %}
+      <option value="{{ p.id }}" {% if task and task.project_id==p.id %}selected{% endif %}>{{ p.name }}</option>
+    {% endfor %}
+  </select>
+  <label>Assign To</label>
+  <select name="assigned_to">
+    <option value="">(none)</option>
+    {% for w in workers %}
+      <option value="{{ w.id }}" {% if task and task.assigned_to==w.id %}selected{% endif %}>{{ w.name }} ({{ w.role }})</option>
+    {% endfor %}
+  </select>
+  <label>Priority</label>
+  <select name="priority">
+    <option {% if task and task.priority=='Low' %}selected{% endif %}>Low</option>
+    <option {% if task and task.priority=='Normal' or not task %}selected{% endif %}>Normal</option>
+    <option {% if task and task.priority=='High' %}selected{% endif %}>High</option>
+  </select>
+  <label>Deadline</label><input type="text" name="deadline" value="{{ task.deadline if task else '' }}">
+  <label>Status</label>
+  <select name="status">
+    <option {% if task and task.status=='Pending' or not task %}selected{% endif %}>Pending</option>
+    <option {% if task and task.status=='In Progress' %}selected{% endif %}>In Progress</option>
+    <option {% if task and task.status=='Done' %}selected{% endif %}>Done</option>
+  </select>
+  <p><button class="btn" type="submit">Save</button></p>
+</form>
+{% endblock %}

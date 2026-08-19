@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Post Daily Update for: {{ project.name }}</h2>
+<form method="post" enctype="multipart/form-data">
+  <label>Update Text</label>
+  <textarea name="text" rows="4" placeholder="Describe today's progress..."></textarea>
+  <label>Photos (select one or more)</label>
+  <input type="file" name="images" multiple accept="image/*">
+  <p class="note" style="margin-top:6px">Photos can be viewed by users but cannot be downloaded. Upload date will be shown on each photo.</p>
+  <p style="margin-top:14px"><button class="btn" type="submit">Post Update</button>
+     <a href="{{ url_for('project_detail', pid=project.id) }}" style="margin-left:10px">Cancel</a></p>
+</form>
+{% endblock %}

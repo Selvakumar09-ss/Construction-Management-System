@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Admin Dashboard</h2>
+<p>
+  <a class="btn" href="{{ url_for('add_user') }}">Add User</a>
+  <a class="btn" href="{{ url_for('register') }}">Register User</a>
+  <a class="btn" href="{{ url_for('add_project') }}">Add Project</a>
+  <a class="btn" href="{{ url_for('reports') }}">Reports</a>
+</p>
+
+<h3>Users</h3>
+<table>
+  <tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr>
+  {% for u in users %}
+  <tr>
+    <td>{{ u.id }}</td>
+    <td>{{ u.name }}</td>
+    <td>{{ u.email }}</td>
+    <td>{{ u.role }}</td>
+    <td>
+      <a href="{{ url_for('edit_user', uid=u.id) }}">Edit</a> |
+      <a href="{{ url_for('delete_user', uid=u.id) }}" onclick="return confirm('Delete?');">Delete</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h3>Projects</h3>
+<table>
+  <tr><th>ID</th><th>Name</th><th>Location</th><th>Progress</th><th>Actions</th></tr>
+  {% for p in projects %}
+  <tr>
+    <td>{{ p.id }}</td>
+    <td>{{ p.name }}</td>
+    <td>{{ p.location }}</td>
+    <td>
+      <div class="progress"><span style="width:{{ p.progress }}%"></span></div>
+    </td>
+    <td><a href="{{ url_for('project_detail', pid=p.id) }}">View</a> | <a href="{{ url_for('project_edit', pid=p.id) }}">Edit</a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
